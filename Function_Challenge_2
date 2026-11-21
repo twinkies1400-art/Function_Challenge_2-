@@ -1,1 +1,137 @@
+#include <iostream>
+#include <iomanip>
+#include <limits>
 
+int main() {
+    double grade1 = 0.0, grade2 = 0.0, grade3 = 0.0;
+    bool gradesEntered = false;
+    int choice;
+
+    do {
+
+        std::cout << "\n--- Grade Management Menu ---\n";
+        std::cout << "1. Input Grades\n";
+        std::cout << "2. Calculate and Display Average\n";
+        std::cout << "3. Assign and Display Letter Grade\n";
+        std::cout << "4. Quit\n";
+        std::cout << "Enter your choice (1-4): ";
+
+         if (!(std::cin >> choice)) {
+            std::cout << "Invalid input. Please enter a number between 1 and 4.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        
+        switch (choice) {
+            case 1: {
+                std::cout << "\nEnter three numerical grades:\n";
+                std::cout << "Grade 1: ";
+                std::cin >> grade1;
+                std::cout << "Grade 2: ";
+                std::cin >> grade2;
+                std::cout << "Grade 3: ";
+                std::cin >> grade3;
+                
+                gradesEntered = true;
+                std::cout << "Grades recorded successfully!\n";
+                break;
+            }
+            case 2: {
+                if (!gradesEntered) {
+                    std::cout << "\nPlease input grades first (Option 1).\n";
+                } else {
+                    double average = (grade1 + grade2 + grade3) / 3.0;
+                    std::cout << std::fixed << std::setprecision(2);
+                    std::cout << "\nAverage Grade: " << average << "\n";
+                }
+                break;
+            }
+            case 3: {
+                if (!gradesEntered) {
+                    std::cout << "\nPlease input grades first (Option 1).\n";
+                } else {
+                    double average = (grade1 + grade2 + grade3) / 3.0;
+                    char letterGrade;
+
+                    if (average >= 90.0) {
+                        letterGrade = 'A';
+                    } else if (average >= 80.0) {
+                        letterGrade = 'B';
+                    } else if (average >= 70.0) {
+                        letterGrade = 'C';
+                    } else if (average >= 60.0) {
+                        letterGrade = 'D';
+                    } else {
+                        letterGrade = 'F';
+                    }
+
+                    std::cout << std::fixed << std::setprecision(2);
+                    std::cout << "\nAverage: " << average << " -> Letter Grade: " << letterGrade << "\n";
+                }
+                break;
+            }
+            case 4: {
+                std::cout << "\nExiting program. Goodbye!\n";
+                break;
+            }
+            default: {
+                std::cout << "\nInvalid choice. Please select an option from 1 to 4.\n";
+                break;
+            }
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+#include <iomanip>
+#include <iostream>
+
+void inputGrades(double& g1, double& g2, double& g3);
+double calculateAverage(const double g1, const double g2, const double g3);
+char getLetterGrade(const double average);
+
+int main() {
+  double grade1 = 0.0;
+  double grade2 = 0.0;
+  double grade3 = 0.0;
+
+  inputGrades(grade1, grade2, grade3);
+
+  double average = calculateAverage(grade1, grade2, grade3);
+  char letterGrade = getLetterGrade(average);
+
+  std::cout << std::fixed << std::setprecision(2);
+  std::cout << "\n--- Grade Summary ---\n";
+  std::cout << "Grades Entered: " << grade1 << ", " << grade2 << ", " << grade3
+            << "\n";
+  std::cout << "Average Grade:  " << average << "\n";
+  std::cout << "Letter Grade:   " << letterGrade << "\n";
+
+  return 0;
+}
+
+void inputGrades(double& g1, double& g2, double& g3) {
+  std::cout << "Enter three grades separated by spaces or newlines: ";
+  std::cin >> g1 >> g2 >> g3;
+}
+
+double calculateAverage(const double g1, const double g2, const double g3) {
+  return (g1 + g2 + g3) / 3.0;
+}
+
+char getLetterGrade(const double average) {
+  if (average >= 90.0) {
+    return 'A';
+  } else if (average >= 80.0) {
+    return 'B';
+  } else if (average >= 70.0) {
+    return 'C';
+  } else if (average >= 60.0) {
+    return 'D';
+  } else {
+    return 'F';
+  }
+}
